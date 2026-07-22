@@ -23,14 +23,29 @@ final class VersoUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testLaunchShowsWorkspaceShell() throws {
         let app = XCUIApplication()
+        app.launchArguments += [
+            "-ApplePersistenceIgnoreState", "YES",
+            "-workspace.last.security-scoped-bookmark", ""
+        ]
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
+        if !app.windows.firstMatch.waitForExistence(timeout: 2) {
+            app.typeKey("n", modifierFlags: .command)
+        }
+
+        XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            app.descendants(matching: .any)["workspace.welcome"]
+                .waitForExistence(timeout: 3)
+        )
+        XCTAssertTrue(
+            app.descendants(matching: .any)["workspace.create"].exists
+        )
+        XCTAssertTrue(
+            app.descendants(matching: .any)["workspace.open"].exists
+        )
     }
 
     @MainActor

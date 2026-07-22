@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct VersoApp: App {
+    @StateObject private var environment = AppEnvironment()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(environment)
         }
+        .defaultSize(width: 1120, height: 720)
     }
 }

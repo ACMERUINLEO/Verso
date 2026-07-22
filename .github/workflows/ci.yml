@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core-tests:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: xcodebuild -version
+      - name: Dependency boundaries
+        run: bash Scripts/check_dependencies.sh
+      - name: Core, migration, and recovery tests
+        run: swift test --package-path Packages/VersoCore
+      - name: App unit tests
+        run: >-
+          xcodebuild
+          -workspace Verso.xcworkspace
+          -scheme VersoUnitTests
+          -configuration Debug
+          -destination 'platform=macOS'
+          CODE_SIGNING_ALLOWED=NO
+          test
+
+  app-build:
+    runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build ${{ matrix.configuration }}
+        run: >-
+          xcodebuild
+          -workspace Verso.xcworkspace
+          -scheme Verso
+          -configuration ${{ matrix.configuration }}
+          -destination 'platform=macOS'
+          CODE_SIGNING_ALLOWED=NO
+          build
