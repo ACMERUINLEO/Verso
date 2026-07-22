@@ -14,7 +14,7 @@
 
 ## 2026-07-22｜Xcode 26 双机开发兼容修复
 
-状态：工程兼容修复已完成本地复验，等待远端 Xcode 26.5 CI 与第二台 Mac 验证。
+状态：工程兼容修复已通过本地 Xcode 26.6 和远端 Xcode 26.5 CI，等待第二台 Mac 验证。
 
 ### 当前版本具备哪些能力？
 
@@ -37,7 +37,7 @@
 - Xcode 26.6 本地 Debug、Release 构建通过。
 - VersoCore 28 项测试与 App 6 项单元测试通过。
 - 工程格式和 shared scheme 守卫检查通过。
-- 待验证：GitHub Xcode 26.5 CI。
+- GitHub Xcode 26.5 CI 的 Debug、Release、VersoCore 与 App 单元测试全部通过。
 - 第二台 Mac 首次拉取后，应运行同一组检查，确认其具体 Xcode build version。
 
 ## 2026-07-22｜Phase 0 同步兼容基线
