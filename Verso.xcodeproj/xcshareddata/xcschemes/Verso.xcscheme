@@ -35,6 +35,20 @@
                ReferencedContainer = "container:Verso.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8998C1ED30109CCB005AE3B8"
+               BuildableName = "VersoUITests.xctest"
+               BlueprintName = "VersoUITests"
+               ReferencedContainer = "container:Verso.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -44,14 +58,21 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "NO">
+         <TestableReference skipped = "NO" parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8998C1E330109CCB005AE3B8"
                BuildableName = "VersoTests.xctest"
                BlueprintName = "VersoTests"
+               ReferencedContainer = "container:Verso.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference skipped = "NO" parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8998C1ED30109CCB005AE3B8"
+               BuildableName = "VersoUITests.xctest"
+               BlueprintName = "VersoUITests"
                ReferencedContainer = "container:Verso.xcodeproj">
             </BuildableReference>
          </TestableReference>

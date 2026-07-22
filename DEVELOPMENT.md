@@ -6,26 +6,38 @@ Every product-facing feature batch must prepend an entry to `docs/product/PRODUC
 
 ## Toolchain
 
-- Xcode 27.0 (`27A5228h` at baseline creation)
+- Xcode 26.5 is the compatibility floor used by GitHub CI
+- Xcode 26.6 is the current locally verified stable toolchain
 - Swift 6 language mode with complete concurrency checking
 - macOS 15.0 minimum deployment target
 - Apple Silicon and Intel Macs (`arm64` and `x86_64` release architectures)
 
-Open `Verso.xcworkspace` with `/Applications/Xcode-beta.app` while macOS 27 requires the beta toolchain. The `.xcodeproj` remains part of the workspace, but the workspace is the canonical entry point because it also resolves local packages.
+Open `Verso.xcworkspace`; the workspace is the canonical entry point because it also resolves local packages. Keep `Verso.xcodeproj` at project format `objectVersion = 77`. Xcode 27 may open the project, but do not accept an automatic project-format upgrade that makes it unreadable by stable Xcode 26.
 
-For command-line builds, either select that Xcode globally:
-
-```sh
-sudo xcode-select --switch /Applications/Xcode-beta.app/Contents/Developer
-sudo xcodebuild -runFirstLaunch
-```
-
-or select it for one command:
+Before committing Xcode project changes, run the compatibility guard:
 
 ```sh
-DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer \
-  xcodebuild -project Verso.xcodeproj -scheme Verso -configuration Debug build
+bash Scripts/check_project_format.sh
 ```
+
+For command-line builds with the stable Xcode installation:
+
+```sh
+xcodebuild \
+  -workspace Verso.xcworkspace \
+  -scheme Verso \
+  -configuration Debug \
+  -destination 'platform=macOS' \
+  CODE_SIGNING_ALLOWED=NO \
+  build
+```
+
+## Working across Macs
+
+- Use Git branches and pull requests to synchronize source code between development Macs. Do not share `xcuserdata`, DerivedData, build products, or personal signing settings.
+- Both Macs should open `Verso.xcworkspace` with stable Xcode 26.5 or newer and run `bash Scripts/check_project_format.sh` after pulling project-file changes. The `Verso` and `VersoUnitTests` schemes are shared project data and must remain committed.
+- Security-scoped bookmarks are local credentials and are intentionally not committed or synchronized. Each Mac must select or reopen its Workspace folder once to grant access on that device.
+- Verso Phase 0 does not synchronize Workspace contents or `.verso` state between devices. Do not concurrently open the same cloud-synchronized Workspace on two Macs; SQLite, WAL files, and local-only execution state have no cross-device conflict resolution yet.
 
 ## Identity and signing
 
@@ -69,9 +81,8 @@ The Phase 0 reliability foundation lives in `Packages/VersoCore`. Verify it inde
 
 ```sh
 bash Scripts/check_dependencies.sh
-
-DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer \
-  swift test --package-path Packages/VersoCore
+bash Scripts/check_project_format.sh
+swift test --package-path Packages/VersoCore
 ```
 
 See `docs/engineering/PHASE0.md` for module boundaries, failure scenarios, and remaining Phase 0 work.

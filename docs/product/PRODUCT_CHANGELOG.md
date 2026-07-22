@@ -12,6 +12,34 @@
 
 ---
 
+## 2026-07-22｜Xcode 26 双机开发兼容修复
+
+状态：工程兼容修复已完成本地复验，等待远端 Xcode 26.5 CI 与第二台 Mac 验证。
+
+### 当前版本具备哪些能力？
+
+- 本次不新增用户功能；Workspace、导入、编辑和恢复能力保持不变。
+- 工程文件格式固定为 Xcode 26.5 可读取的版本，支持在当前 Xcode 26.6 开发机、GitHub Xcode 26.5 runner 和另一台 macOS 26 稳定版开发机之间通过 Git 协作。
+
+### 哪些能力不在用户可以感知或控制到的表层 UI？
+
+- CI 和本地脚本会阻止误将工程升级为稳定 Xcode 26 无法读取的格式，并检查 App 与单元测试 scheme 已共享给其他设备。
+- security-scoped bookmark 仍是每台 Mac 独立保存的本地授权，不会随 Git 或未来的 Workspace 内容同步传播。
+
+### 哪些内容需要注意？
+
+1. 源码可以通过 Git 在两台 Mac 间同步；`xcuserdata`、DerivedData、签名设置和安全作用域书签不能同步。
+2. Phase 0 尚无真实多设备 Workspace 同步。不要在两台 Mac 上同时打开同一份云盘 Workspace，否则 `.verso` 数据库和 WAL 没有跨设备冲突保护。
+3. 在 Xcode 27 打开工程时，不要接受会提升 project format 的自动修改；提交前运行 `bash Scripts/check_project_format.sh`。
+
+### 验证与节奏信号
+
+- Xcode 26.6 本地 Debug、Release 构建通过。
+- VersoCore 28 项测试与 App 6 项单元测试通过。
+- 工程格式和 shared scheme 守卫检查通过。
+- 待验证：GitHub Xcode 26.5 CI。
+- 第二台 Mac 首次拉取后，应运行同一组检查，确认其具体 Xcode build version。
+
 ## 2026-07-22｜Phase 0 同步兼容基线
 
 状态：本地功能完成，等待人工验收；尚未提交或运行远端 CI。
