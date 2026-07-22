@@ -3,8 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 110;
+	objectVersion = 77;
 	objects = {
+
+/* Begin PBXBuildFile section */
+		AA00000130110000005AE3B8 /* VersoDomain in Frameworks */ = {isa = PBXBuildFile; productRef = AA00001130110000005AE3B8 /* VersoDomain */; };
+		AA00000230110000005AE3B8 /* VersoApplication in Frameworks */ = {isa = PBXBuildFile; productRef = AA00001230110000005AE3B8 /* VersoApplication */; };
+		AA00000330110000005AE3B8 /* VersoPersistence in Frameworks */ = {isa = PBXBuildFile; productRef = AA00001330110000005AE3B8 /* VersoPersistence */; };
+		AA00000430110000005AE3B8 /* VersoFileSystem in Frameworks */ = {isa = PBXBuildFile; productRef = AA00001430110000005AE3B8 /* VersoFileSystem */; };
+		AA00000530110000005AE3B8 /* VersoObservability in Frameworks */ = {isa = PBXBuildFile; productRef = AA00001530110000005AE3B8 /* VersoObservability */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		8998C1E530109CCB005AE3B8 /* PBXContainerItemProxy */ = {
@@ -51,6 +59,11 @@
 		8998C1D430109CC9005AE3B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				AA00000130110000005AE3B8 /* VersoDomain in Frameworks */,
+				AA00000230110000005AE3B8 /* VersoApplication in Frameworks */,
+				AA00000330110000005AE3B8 /* VersoPersistence in Frameworks */,
+				AA00000430110000005AE3B8 /* VersoFileSystem in Frameworks */,
+				AA00000530110000005AE3B8 /* VersoObservability in Frameworks */,
 			);
 		};
 		8998C1E130109CCB005AE3B8 /* Frameworks */ = {
@@ -103,6 +116,13 @@
 				8998C1D930109CC9005AE3B8 /* Verso */,
 			);
 			name = Verso;
+			packageProductDependencies = (
+				AA00001130110000005AE3B8 /* VersoDomain */,
+				AA00001230110000005AE3B8 /* VersoApplication */,
+				AA00001330110000005AE3B8 /* VersoPersistence */,
+				AA00001430110000005AE3B8 /* VersoFileSystem */,
+				AA00001530110000005AE3B8 /* VersoObservability */,
+			);
 			productName = Verso;
 			productReference = 8998C1D730109CC9005AE3B8 /* Verso.app */;
 			productType = "com.apple.product-type.application";
@@ -181,6 +201,9 @@
 			);
 			mainGroup = 8998C1CE30109CC9005AE3B8;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AA00002030110000005AE3B8 /* XCLocalSwiftPackageReference "Packages/VersoCore" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8998C1D830109CC9005AE3B8 /* Products */;
 			projectDirPath = "";
@@ -296,13 +319,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Debug;
 		};
@@ -353,11 +377,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Release;
 		};
@@ -366,12 +391,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Verso/Verso.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -379,15 +406,14 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Prolugue.Verso;
+				PRODUCT_BUNDLE_IDENTIFIER = com.acmeruin.verso;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -396,12 +422,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Verso/Verso.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -409,15 +437,14 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Prolugue.Verso;
+				PRODUCT_BUNDLE_IDENTIFIER = com.acmeruin.verso;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -428,15 +455,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Prolugue.VersoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.acmeruin.verso.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Verso.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Verso";
 			};
 			name = Debug;
@@ -448,15 +475,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Prolugue.VersoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.acmeruin.verso.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Verso.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Verso";
 			};
 			name = Release;
@@ -468,13 +495,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Prolugue.VersoUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.acmeruin.verso.ui-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_TARGET_NAME = Verso;
 			};
 			name = Debug;
@@ -486,13 +513,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Prolugue.VersoUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.acmeruin.verso.ui-tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_TARGET_NAME = Verso;
 			};
 			name = Release;
@@ -533,6 +560,41 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		AA00002030110000005AE3B8 /* XCLocalSwiftPackageReference "Packages/VersoCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/VersoCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA00001130110000005AE3B8 /* VersoDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA00002030110000005AE3B8 /* XCLocalSwiftPackageReference "Packages/VersoCore" */;
+			productName = VersoDomain;
+		};
+		AA00001230110000005AE3B8 /* VersoApplication */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA00002030110000005AE3B8 /* XCLocalSwiftPackageReference "Packages/VersoCore" */;
+			productName = VersoApplication;
+		};
+		AA00001330110000005AE3B8 /* VersoPersistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA00002030110000005AE3B8 /* XCLocalSwiftPackageReference "Packages/VersoCore" */;
+			productName = VersoPersistence;
+		};
+		AA00001430110000005AE3B8 /* VersoFileSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA00002030110000005AE3B8 /* XCLocalSwiftPackageReference "Packages/VersoCore" */;
+			productName = VersoFileSystem;
+		};
+		AA00001530110000005AE3B8 /* VersoObservability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA00002030110000005AE3B8 /* XCLocalSwiftPackageReference "Packages/VersoCore" */;
+			productName = VersoObservability;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8998C1CF30109CC9005AE3B8 /* Project object */;
 	validationLevel = 1;
