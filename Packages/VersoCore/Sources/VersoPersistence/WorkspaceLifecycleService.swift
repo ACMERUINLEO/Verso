@@ -4,12 +4,12 @@ import VersoDomain
 import VersoSyncProtocol
 
 public actor WorkspaceLifecycleService: WorkspaceLifecycleServicing {
-    private var sessions: [WorkspaceID: WorkspaceDatabase] = [:]
-    private let failureInjector: any FailureInjecting
+    var sessions: [WorkspaceID: WorkspaceDatabase] = [:]
+    let failureInjector: any FailureInjecting
     private let backupPolicy: BackupPolicy
     private let diskCapacityProvider: any DiskCapacityProviding
-    private let diagnostics: any DiagnosticsRecording
-    private let deviceID: DeviceID
+    let diagnostics: any DiagnosticsRecording
+    let deviceID: DeviceID
 
     public init(
         deviceID: DeviceID = DeviceID(),

@@ -48,6 +48,12 @@ public final class PerformanceTracer: @unchecked Sendable {
             os_signpost(type, log: log, name: "File Write", signpostID: id)
         case .backgroundJob:
             os_signpost(type, log: log, name: "Background Job", signpostID: id)
+        case .bundleBuild:
+            os_signpost(type, log: log, name: "Bundle Build", signpostID: id)
+        case .outputValidation:
+            os_signpost(type, log: log, name: "Output Validation", signpostID: id)
+        case .outputMerge:
+            os_signpost(type, log: log, name: "Output Merge", signpostID: id)
         }
     }
 }

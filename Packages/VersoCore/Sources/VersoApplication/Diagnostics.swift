@@ -10,6 +10,9 @@ public enum DiagnosticOperation: String, Codable, CaseIterable, Sendable {
     case workspaceRestore = "workspace.restore"
     case fileWrite = "file.write"
     case backgroundJob = "job.run"
+    case bundleBuild = "bundle.build"
+    case outputValidation = "output.validation"
+    case outputMerge = "output.merge"
 }
 
 public enum DiagnosticOutcome: String, Codable, Sendable {

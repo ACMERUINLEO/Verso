@@ -381,7 +381,9 @@ struct WorkspaceLifecycleTests {
         arguments: [
             ("schema-v1-active", "Fixture Active", 1, 1, 0),
             ("schema-v1-closed", "Fixture Closed", 0, 1, 0),
-            ("schema-v2-synced", "Fixture Synced", 0, 3, 1)
+            ("schema-v2-synced", "Fixture Synced", 0, 3, 1),
+            ("schema-v3-knowledge-assets", "Fixture Knowledge", 0, 3, 1),
+            ("schema-v4-output-mainline", "Fixture Mainline", 0, 3, 1)
         ]
     )
     func schemaFixtureCompatibility(
@@ -417,10 +419,10 @@ struct WorkspaceLifecycleTests {
                 == expectedSyncChanges
         )
         let migrationBackup = WorkspaceLayout(root: root).backups
-            .appending(path: "pre-migration-v2.sqlite")
+            .appending(path: "pre-migration-v4.sqlite")
         #expect(
             FileManager.default.fileExists(atPath: migrationBackup.path)
-                == fixtureName.hasPrefix("schema-v1-")
+                == !fixtureName.hasPrefix("schema-v4-")
         )
     }
 
@@ -496,18 +498,33 @@ struct WorkspaceLifecycleTests {
     }
 
     private func installFixture(named name: String, at root: URL) throws {
-        guard let fixtureURL = Bundle.module.url(
-            forResource: name,
-            withExtension: "sql"
-        ) else {
-            throw FixtureError.missing(name)
-        }
-        let sql = try String(contentsOf: fixtureURL, encoding: .utf8)
         let layout = WorkspaceLayout(root: root)
         try layout.createDirectories()
         let queue = try DatabaseQueue(path: layout.database.path)
-        try queue.writeWithoutTransaction { database in
-            try database.execute(sql: sql)
+        let fixtureNames: [String]
+        switch name {
+        case "schema-v3-knowledge-assets":
+            fixtureNames = ["schema-v2-synced", name]
+        case "schema-v4-output-mainline":
+            fixtureNames = [
+                "schema-v2-synced",
+                "schema-v3-knowledge-assets",
+                name
+            ]
+        default:
+            fixtureNames = [name]
+        }
+        for fixtureName in fixtureNames {
+            guard let fixtureURL = Bundle.module.url(
+                forResource: fixtureName,
+                withExtension: "sql"
+            ) else {
+                throw FixtureError.missing(fixtureName)
+            }
+            let sql = try String(contentsOf: fixtureURL, encoding: .utf8)
+            try queue.writeWithoutTransaction { database in
+                try database.execute(sql: sql)
+            }
         }
     }
 

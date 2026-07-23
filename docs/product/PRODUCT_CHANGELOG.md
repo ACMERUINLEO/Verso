@@ -12,6 +12,60 @@
 
 ---
 
+## 2026-07-23｜Phase 0B/0C 知识资产与 Output Mainline 工程闭环
+
+状态：底层纵向切片已完成并通过本地验证；没有新增表层 UI，等待产品检查后再决定交互节奏。
+
+### 当前版本具备哪些能力？
+
+#### 用户可以直接操作
+
+- 本批次不新增 App 中可见、可点击的能力。现有 Workspace 创建/打开/切换/关闭、文件夹导入、Markdown 编辑和只读恢复界面保持不变。
+
+#### App 核心现在能够执行，但尚未接入界面
+
+- 建立与登录账号、设备和模型名称解耦的 Actor；捕获 SourceRecord，并把来源、Document Revision、KnowledgeConcept Revision 和发布策略连接为可反向追踪的事实。
+- 创建 Bundle Draft，冻结引用确切 revision 的不可变 BundleVersion；冻结时校验文件哈希、私密/敏感策略和导出路径。
+- 确定性生成最小 Experty/OKF Artifact：外层 manifest、`okf/`、`assets/` 与 validation/benchmark reports；可校验、重新导入、保留 UUID、相对链接和未知 frontmatter。
+- 创建 Output Main Revision、基于确切 main revision 的 Contribution、不可变 ChangeSet、确定性 Diff/Validation、Review/Finding 和人工 Approval。
+- 原子 Merge：一次事务共同生成新 Main Revision、完整成员快照、MergeRecord、Contribution 状态、applied operation、Sync Outbox 与 Integration Outbox。
+- 相同 operation 重放不会产生重复 BundleVersion 或 main revision；不同意图复用 ID 会失败；并发 Contribution 使用过期 main revision 会明确冲突。
+- schema 已追加 v3 knowledge assets 与 v4 output mainline，v1/v2/v3/v4 fixture 均可迁移到当前版本并保留迁移前备份。
+
+### 哪些能力不在用户可以感知或控制到的表层 UI？
+
+| 能力 | 当前状态 |
+|---|---|
+| Actor / Source / Concept 管理 | Command、事务和测试已完成，无列表或编辑界面 |
+| Bundle Draft / Freeze | 核心闭环已完成，无 Bundle Studio、导出目录或 ZIP 入口 |
+| OKF 导入/导出/校验 | 纯格式模块已完成，无文件选择和结果报告界面 |
+| Output / Contribution / Review / Merge | 状态机、命令、校验和原子事务已完成，无工作流界面 |
+| Diff | 确定性成员、revision、rank、引用、provenance 与 Markdown 行 Diff 已完成，无预览 |
+| Sync Outbox | 新正式事实已分类并写入，但仍无真实 transport 或消费者 |
+| Integration Outbox | `BundleBuilt` / `OutputMerged` 只在本地持久化，不发送 Experty 或遥测 |
+| 新诊断操作 | Bundle Build、Output Validation、Output Merge 已接入 trace，无诊断 UI |
+
+### 哪些内容需要注意？
+
+1. 这些是后续产品功能的安全底座，不代表用户现在可以在 App 中创建 Concept、Bundle 或 Contribution。
+2. Artifact 的确切路径、字节和逐文件哈希会随 BundleVersion 一并冻结；之后源 Markdown 改动或 App 重启都不会改变该版本。当前还没有“导出到 Finder”、ZIP 归档、签名、发布或 Experty 上传入口。
+3. `PublicationPolicy` 是本地技术门禁，不是版权认证、法律审核或 DRM。
+4. Sync Outbox 仍不等于多设备同步。两台 Mac 继续只通过 Git 同步源码，不要并发打开同一个云盘 Workspace。
+5. Integration Outbox 没有网络消费者；不会发送正文、路径、凭据或调用遥测。
+6. 当前 Output 只允许引用已登记的 Document/Concept revision；Asset revision 的正式持久化写入链仍属于后续文件模型工作。
+7. Contribution 流程目前要求人工 Actor 批准；AI review 可以评论或请求修改，不能批准或自动合并。
+
+### 验证与节奏信号
+
+- Source → Concept → BundleVersion → OKF export/validate/import 端到端测试通过。
+- Output Revision 1 → Contribution → ChangeSet → Validation → human Approval → Main Revision 2 端到端测试通过。
+- stale mainline、blocking finding、AI approval、operation fingerprint、幂等重放、事务回滚/重试和重启恢复测试通过。
+- v1 active、v1 closed、v2 synced、v3 knowledge assets、v4 output mainline 五类 fixture 迁移通过。
+- VersoCore 共 44 项测试（11 个测试套件）通过；App 共 6 项测试通过；macOS Debug 与 Release 构建通过。
+- 新模块依赖边界没有引入网络、Experty、CloudKit、UI 或新的第三方依赖。
+- 双机协作仍以 Git 同步源码：另一台 macOS 26 稳定版 Mac 拉取后需要运行同一组工程格式、依赖、Core、App、Debug 与 Release 检查；Workspace bookmark、签名和 DerivedData 不随 Git 同步。
+- 产品节奏建议：下一步先做最小只读/手动操作 UI，让用户能看见 Source、Concept、Output 和 Contribution 流程；在此之前不应进入 Experty、AI 自动合并或真实同步。
+
 ## 2026-07-22｜Xcode 26 双机开发兼容修复
 
 状态：工程兼容修复已通过本地 Xcode 26.6 和远端 Xcode 26.5 CI，等待第二台 Mac 验证。

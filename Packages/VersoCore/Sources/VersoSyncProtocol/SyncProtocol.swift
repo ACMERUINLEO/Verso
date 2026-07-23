@@ -8,6 +8,27 @@ public enum SyncRecordKind: String, Codable, CaseIterable, Sendable {
     case asset
     case conversation
     case task
+    case actor
+    case creatorProfile
+    case sourceRecord
+    case knowledgeConcept
+    case knowledgeConceptRevision
+    case reference
+    case publicationPolicy
+    case bundle
+    case bundleVersion
+    case bundleMember
+    case output
+    case outputRevision
+    case outputRevisionMember
+    case contribution
+    case changeSet
+    case validationRun
+    case validationResult
+    case review
+    case approval
+    case mergeRecord
+    case integrationEvent
 }
 
 public enum SyncMutationKind: String, Codable, Sendable {
@@ -142,6 +163,28 @@ public enum SyncDataCategory: String, Codable, CaseIterable, Sendable {
     case embedding
     case thumbnail
     case previewArtifact
+    case actorFact
+    case creatorProfileFact
+    case sourceRecordFact
+    case knowledgeConceptFact
+    case referenceFact
+    case bundleFact
+    case publicationPolicyFact
+    case outputFact
+    case contributionFact
+    case changeSetFact
+    case validationFact
+    case reviewFact
+    case approvalFact
+    case mergeRecordFact
+    case integrationEventFact
+    case unsavedInput
+    case selectionState
+    case windowState
+    case temporaryAIStream
+    case diffPreview
+    case renderCache
+    case unsavedAISuggestion
 }
 
 public enum SyncDataPolicy {
@@ -153,7 +196,22 @@ public enum SyncDataPolicy {
              .nodeMetadata,
              .immutableRevision,
              .tombstone,
-             .operationIdentity:
+             .operationIdentity,
+             .actorFact,
+             .creatorProfileFact,
+             .sourceRecordFact,
+             .knowledgeConceptFact,
+             .referenceFact,
+             .bundleFact,
+             .publicationPolicyFact,
+             .outputFact,
+             .contributionFact,
+             .changeSetFact,
+             .validationFact,
+             .reviewFact,
+             .approvalFact,
+             .mergeRecordFact,
+             .integrationEventFact:
             .syncedFact
         case .securityScopedBookmark,
              .absoluteFilePath,
@@ -161,12 +219,19 @@ public enum SyncDataPolicy {
              .oauthToken,
              .deviceCredential,
              .jobLease,
-             .localExecutionState:
+             .localExecutionState,
+             .unsavedInput,
+             .selectionState,
+             .windowState,
+             .temporaryAIStream:
             .localOnlyFact
         case .fullTextIndex,
              .embedding,
              .thumbnail,
-             .previewArtifact:
+             .previewArtifact,
+             .diffPreview,
+             .renderCache,
+             .unsavedAISuggestion:
             .rebuildableCache
         }
     }

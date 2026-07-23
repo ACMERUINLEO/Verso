@@ -27,6 +27,16 @@ check_forbidden_imports \
     "VersoSyncProtocol" \
     "SwiftUI|AppKit|UIKit|GRDB|CloudKit|EventKit|WebKit|OSLog"
 
+check_forbidden_imports \
+    "VersoBundleFormat" \
+    "SwiftUI|AppKit|UIKit|GRDB|CloudKit|EventKit|WebKit|OSLog"
+
+if rg --line-number "^import (VersoApplication|VersoPersistence|VersoFileSystem|VersoObservability)$" \
+    "$PACKAGE_ROOT/VersoBundleFormat"; then
+    echo "VersoBundleFormat must remain a pure format adapter"
+    exit 1
+fi
+
 if rg --line-number "CloudKit|CKSyncEngine|iCloud|NAS" \
     "$PACKAGE_ROOT/VersoSyncProtocol"; then
     echo "SyncTransport must remain provider-neutral"

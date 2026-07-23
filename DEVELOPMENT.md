@@ -75,6 +75,17 @@ Phase 0 defines a provider-neutral `VersoSyncProtocol` but does not connect a re
 
 The local `DeviceID` is reused across launches. Security-scoped bookmarks, absolute paths, API keys, OAuth tokens, device credentials, job leases, and local execution state must never be encoded into Sync Outbox payloads. See `docs/engineering/SYNC_BASELINE.md` for the executable data classification and invariants.
 
+## Knowledge artifacts and output mainline
+
+Phase 0B/0C live below the App UI in `VersoDomain`, `VersoApplication`, `VersoPersistence`, and the pure `VersoBundleFormat` target.
+
+- `VersoBundleFormat` may depend only on Domain and Apple system libraries. It must never import GRDB, UI, security-scoped bookmark handling, network code, or provider SDKs.
+- BundleVersion and OutputRevision are immutable complete snapshots. Do not replace exact revision IDs with a “latest” lookup.
+- All Phase 0B/0C writes use versioned `ApplicationCommand` types and `OperationID`.
+- MergeContribution must keep OutputRevision, Output current pointer, MergeRecord, Contribution state, applied operation, Sync Outbox, and Integration Outbox in one transaction.
+- Integration Outbox is not a sync transport. Phase 0 persists `BundleBuilt` and `OutputMerged` locally and does not connect Experty.
+- Artifact, Sync, and Integration payloads must not contain absolute paths, bookmarks, credentials, API/OAuth tokens, or unselected private body content.
+
 ## Core package
 
 The Phase 0 reliability foundation lives in `Packages/VersoCore`. Verify it independently before building the app:

@@ -6,7 +6,7 @@ import VersoSyncProtocol
 
 final class WorkspaceDatabase: @unchecked Sendable {
     let layout: WorkspaceLayout
-    private let pool: DatabasePool
+    let pool: DatabasePool
 
     init(layout: WorkspaceLayout, readOnly: Bool = false) throws {
         self.layout = layout

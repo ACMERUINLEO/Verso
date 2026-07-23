@@ -1,6 +1,6 @@
 # Phase 0 同步兼容基线
 
-状态：本地实现完成，未连接真实远端
+状态：schema v4 本地实现完成，未连接真实远端
 
 ## 边界
 
@@ -28,11 +28,23 @@
 
 | 分类 | 内容 |
 |---|---|
-| synced fact | Workspace/Node 元数据、immutable revision、tombstone、Operation identity |
-| local-only fact | bookmark、绝对路径、API/OAuth 密钥、设备凭据、Job lease、本机执行状态 |
-| rebuildable cache | FTS、Embedding、缩略图、预览产物 |
+| synced fact | Workspace/Node、Actor/CreatorProfile、Source、Concept/Reference/Policy、Bundle、Output/Revision、Contribution/ChangeSet、用于审批的 Validation、Review/Approval、MergeRecord、Integration Event、immutable revision、tombstone、Operation identity |
+| local-only fact | bookmark、绝对路径、API/OAuth 密钥、设备凭据、Job lease、本机执行状态、未保存输入、选区、窗口状态、临时 AI stream |
+| rebuildable cache | FTS、Embedding、缩略图、预览产物、Diff preview、render cache、未保存为 Finding 的 AI 建议 |
 
 Sync Outbox payload 使用显式 DTO 编码。禁止直接编码 App 状态、文件 URL、bookmark data、Keychain 内容或数据库 row。
+
+Document Revision 的同步 payload 只包含稳定 ID、内容哈希、父 revision 与 Actor；Workspace 内相对读取路径仍不进入 payload。Concept 同步事实不自动携带 Markdown 正文，Bundle/Output 只同步确定身份、revision、策略与摘要。
+
+## Integration Outbox
+
+Integration Outbox 与 Sync Outbox 是两张独立表和两类协议：
+
+- Sync Outbox 为未来设备一致性传输服务。
+- Integration Outbox 保存版本化业务事件信封，当前只产生 `BundleBuilt` 与必要的 `OutputMerged`。
+- Integration payload 只含 ID、版本、摘要和数量，不含正文、绝对路径、bookmark、API Key、OAuth Token 或 credential。
+- 两个 Outbox 与相关事实使用同一个 SQLite 事务；故障时一起回滚。
+- Phase 0 没有 Integration consumer，不连接 Experty，也不发送遥测。
 
 ## Phase 0 不做
 
