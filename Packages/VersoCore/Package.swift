@@ -9,6 +9,7 @@ let package = Package(
     ],
     products: [
         .library(name: "VersoDomain", targets: ["VersoDomain"]),
+        .library(name: "VersoBundleFormat", targets: ["VersoBundleFormat"]),
         .library(name: "VersoApplication", targets: ["VersoApplication"]),
         .library(name: "VersoSyncProtocol", targets: ["VersoSyncProtocol"]),
         .library(name: "VersoPersistence", targets: ["VersoPersistence"]),
@@ -24,6 +25,10 @@ let package = Package(
     targets: [
         .target(name: "VersoDomain"),
         .target(
+            name: "VersoBundleFormat",
+            dependencies: ["VersoDomain"]
+        ),
+        .target(
             name: "VersoSyncProtocol",
             dependencies: ["VersoDomain"]
         ),
@@ -35,6 +40,7 @@ let package = Package(
             name: "VersoPersistence",
             dependencies: [
                 "VersoDomain",
+                "VersoBundleFormat",
                 "VersoApplication",
                 "VersoSyncProtocol",
                 .product(name: "GRDB", package: "GRDB.swift")
@@ -51,6 +57,14 @@ let package = Package(
         .testTarget(
             name: "VersoApplicationTests",
             dependencies: ["VersoApplication"]
+        ),
+        .testTarget(
+            name: "VersoDomainTests",
+            dependencies: ["VersoDomain"]
+        ),
+        .testTarget(
+            name: "VersoBundleFormatTests",
+            dependencies: ["VersoBundleFormat"]
         ),
         .testTarget(
             name: "VersoSyncProtocolTests",

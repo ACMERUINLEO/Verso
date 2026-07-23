@@ -12,7 +12,22 @@ struct SyncProtocolTests {
             .nodeMetadata,
             .immutableRevision,
             .tombstone,
-            .operationIdentity
+            .operationIdentity,
+            .actorFact,
+            .creatorProfileFact,
+            .sourceRecordFact,
+            .knowledgeConceptFact,
+            .referenceFact,
+            .bundleFact,
+            .publicationPolicyFact,
+            .outputFact,
+            .contributionFact,
+            .changeSetFact,
+            .validationFact,
+            .reviewFact,
+            .approvalFact,
+            .mergeRecordFact,
+            .integrationEventFact
         ]
         let localOnly: Set<SyncDataCategory> = [
             .securityScopedBookmark,
@@ -21,13 +36,20 @@ struct SyncProtocolTests {
             .oauthToken,
             .deviceCredential,
             .jobLease,
-            .localExecutionState
+            .localExecutionState,
+            .unsavedInput,
+            .selectionState,
+            .windowState,
+            .temporaryAIStream
         ]
         let rebuildable: Set<SyncDataCategory> = [
             .fullTextIndex,
             .embedding,
             .thumbnail,
-            .previewArtifact
+            .previewArtifact,
+            .diffPreview,
+            .renderCache,
+            .unsavedAISuggestion
         ]
 
         #expect(Set(SyncDataCategory.allCases) == synced.union(localOnly).union(rebuildable))
