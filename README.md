@@ -1,3 +1,6 @@
+<img width="1000" height="200" alt="verso banner" src="https://github.com/user-attachments/assets/53a03a89-b789-4901-bfd9-0a4c2a23e160" />
+
+
 # Verso
 
 > 面向设计师、工程师、投资人等专业人士的本地优先知识工作台。
