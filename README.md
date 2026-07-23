@@ -1,4 +1,4 @@
-<img width="1000" height="200" alt="verso banner" src="https://github.com/user-attachments/assets/e0701414-c392-42a5-9d1a-5bd34ef1240b" />
+<img width="1000" height="200" alt="verso banner" src="https://github.com/user-attachments/assets/8e46c9fa-d0d6-4848-86b5-871c5e8253e0" />
 
 
 # Verso
